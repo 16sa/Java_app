@@ -14,8 +14,12 @@ Pre-requisites:
 	apt-cache policy docker-ce
 	apt install docker-ce -y
 	chmod 777 /var/run/docker.sock
+     - Install JDK 8
+	apt update
+	apt install openjdk-8-jdk
+     ==> Set the JAVA_HOME Environment Variable using this command: export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+     ==> Make it permanent using this command: echo "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> ~/.bashrc
 
-    
 Clone the code in EC2 in /opt folder
 -------
     cd /opt
@@ -31,36 +35,37 @@ Go to the folder Java_app and execute the below command:
  
 Build Docker image for the Application
 --------------
-    docker build -t vikashashoke/kubernetes-configmap-reload .
+Go over the Dockerfile cd Java_app and build the doocker image using this command:
+
+    docker build -t your_docker_hub_username/IMAGE_name:tag .
+    docker images
   
 Docker login
 -------------
+To configure your EC2 instance so that Docker running on it can push images to your Docker Hub repository, you need to log in to Docker Hub from that EC2 instance:
+
     docker login
     
 Push docker image to dockerhub
 -----------
-    docker push vikashashoke/kubernetes-configmap-reload
+    docker push safach/devops:latest 
     
-Deploy Spring Application:
+Create the container:
 --------
-    kubectl apply -f kubernetes-configmap.yml
+    docker run -d -p 8080:8080 safach/devops:latest
+    docker ps ( to check all running and non running containers you can use docker ps -a command)
     
-Check Deployments, Pods and Services:
+Check the logs of container:
 -------
+    docker logs <Container ID>
 
-    kubectl get deploy
-    kubectl get pods
-    kubectl get svc
-    
-Now Goto Loadbalancer and check whether service comes Inservice or not, If it comes Inservice copy DNS Name of Loadbalancer and Give in WebUI
-
-    http://a70a89c22e06f49f3ba2b3270e974e29-1311314938.us-west-2.elb.amazonaws.com:8080/home/data
-    
-![2](https://user-images.githubusercontent.com/63221837/82123471-44f5f300-97b7-11ea-9d10-438cf9cc98a0.png)
-
-Now we can cleanup by using below commands:
+Now Go inside the container and check for JAR file under / path
 --------
-    kubectl delete deploy kubernetes-configmap-reload
-    kubectl delete svc kubernetes-configmap-reload
-# springboot_k8s_application
-# mrdevops_java_app
+    docker exec -it <Container ID> /bin/sh
+
+Open the Security Groups to All traffic in EC2 instance and hit the below URL
+--------
+http://<EC2 PUBLIC IP>:8080/home/data
+
+Terminate the instance
+--------
