@@ -19,13 +19,17 @@ Pre-requisites:
 Clone the code in EC2 in /opt folder
 -------
     cd /opt
-    git clone https://github.com/vikash-kumar01/spring-cloud-kubernetes.git
+    git clone https://github.com/16sa/Java_app.git
     
 Build Maven Artifact:
 -------
-    mvn clean install
+Go to the folder Java_app and execute the below command:
+
+    mvn clean install -DskipTests
+
+==> Check inside the Target folder for the jar
  
-Build Docker image for Springboot Application
+Build Docker image for the Application
 --------------
     docker build -t vikashashoke/kubernetes-configmap-reload .
   
