@@ -48,11 +48,11 @@ To configure your EC2 instance so that Docker running on it can push images to y
     
 Push docker image to dockerhub
 -----------
-    docker push safach/devops:latest 
+    docker push your_docker_hub_username/IMAGE_name:tag 
     
 Create the container:
 --------
-    docker run -d -p 8080:8080 safach/devops:latest
+    docker run -d -p 8080:8080 your_docker_hub_username/IMAGE_name:tag
     docker ps ( to check all running and non running containers you can use docker ps -a command)
     
 Check the logs of container:
