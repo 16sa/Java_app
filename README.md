@@ -65,7 +65,7 @@ Now Go inside the container and check for JAR file under / path
 
 Open the Security Groups to All traffic in EC2 instance and hit the below URL
 --------
-http://<EC2 PUBLIC IP>:8080/home/data
+http://EC2_PUBLIC_IP:8080/home/data
 
 Terminate the instance
 --------
