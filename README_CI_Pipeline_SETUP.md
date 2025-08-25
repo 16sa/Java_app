@@ -33,7 +33,6 @@ sudo apt-get install jenkins -y
 **** Get the Administrator password by hitting the below command in EC2
 cat /var/lib/jenkins/secrets/initialAdminPassword
 And add it to the console to unlock jenkins
- 
 
 Step 4 – Install Docker on EC2
 
@@ -90,7 +89,6 @@ sudo apt update -y
 sudo apt install maven -y
 mvn -version
 
-Reboot EC2 instance
 Start docker container if it's not already up
 
 Step 7 – Install Trivy Application on EC2: Trivy is a Simple and Comprehensive Vulnerability Scanner 
