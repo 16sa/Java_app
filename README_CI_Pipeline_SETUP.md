@@ -27,7 +27,6 @@ echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
 sudo apt-get update -y 
 sudo apt-get install jenkins -y
 
-Reboot EC2 instance
 
 **** Change the security group of ec2 instance and add all traffic in inbound rules
 **** Sign Into Jenkins console http://<EC2_PUBLIC _IP>:8080/
@@ -56,7 +55,12 @@ sudo systemctl status docker
 
 sudo chmod 777 /var/run/docker.sock
 
-Reboot EC2 instance
+sudo usermod -aG docker jenkins
+
+sudo systemctl restart docker
+
+sudo systemctl restart jenkins
+
 
 Step 5 – Install Sonarqube on EC2
 
@@ -103,6 +107,8 @@ Step 8 – Install Jfrog on EC2
 sudo usermod -aG docker $USER
 docker pull docker.bintray.io/jfrog/artifactory-oss:latest
 sudo mkdir -p /jfrog/artifactory
+mkdir -p /opt/jfrog/artifactory/var/etc/security
+openssl rand -hex 16 > /opt/jfrog/artifactory/var/etc/security/master.key
 sudo chown -R 1030 /jfrog/
 
 docker run --name artifactory -d \
